@@ -1,33 +1,33 @@
 # Freight Rate Prediction Assessment
 
-This repository contains a complete machine learning solution for the freight-rate prediction assessment. It trains a CatBoost regression model on the provided development data, validates it using a forward-chaining time-based split, generates predictions for the final validation set, fills the fixed December scenario inputs, runs the scorer, and produces a DOCX report with the December chart.
+This repository contains a reproducible machine-learning solution for the freight-rate prediction assessment.
 
-## What this solution includes
-- A reproducible training and prediction pipeline
-- A realistic validation approach for time-series forecasting
-- Feature engineering for route, seasonality, and distance-based signals
-- Data-quality handling for missing values and abnormal weight inputs
-- Generated outputs for submission:
-  - validation_predictions.csv
-  - december_chart_inputs_filled.csv
-  - scorer_results/candidate_december.png
-  - submission_report.docx
+## What this solution does
+- Trains a CatBoost regression model on the provided development data
+- Uses forward-chaining time-based validation instead of a random split
+- Generates validation predictions for the final load set
+- Produces filled December predictions for the fixed chart scenario
+- Creates a scorer chart and a submission-ready report
 
-## Project structure
-- make_submission.py — end-to-end training, prediction, scoring, and report generation
-- requirements.txt — dependencies
-- score.py — provided scorer used to validate the outputs
-- validation_predictions.csv — final predictions for the 12,000 validation loads
-- december_chart_inputs_filled.csv — filled December scenario inputs
-- submission_report.docx — detailed assessment report
-- submission_guide.md — Loom and submission guidance
+## Key files
+- make_submission.py — end-to-end training, feature engineering, prediction, and report pipeline
+- score.py — scorer and chart generation
+- validation_predictions.csv — predictions for the validation load set
+- december_chart_inputs_filled.csv — filled predictions for the December chart input
+- submission_report.docx — submission report in DOCX format
+- requirements.txt — Python dependencies
 
-## Run locally
+## Reproduce locally
 ```bash
 python -m pip install -r requirements.txt
 python make_submission.py
 python score.py --predictions validation_predictions.csv --december-predictions december_chart_inputs_filled.csv
 ```
 
-## Notes
-This approach focuses on generalization rather than overfitting by validating on future months rather than using a random data split. That makes it more appropriate for a forecasting problem like this one.
+## Approach
+- The validation strategy is chronological because this is a forecasting problem.
+- Feature engineering includes route, time, equipment, and seasonal signals.
+- Missing values and abnormal weight values are handled before modeling.
+- CatBoost was selected for strong performance on tabular data with categorical features.
+
+This project is set up so the full workflow can be run locally and the outputs can be submitted directly.
